@@ -19,7 +19,8 @@ public class Soundex
     private static StringBuilder BuildSoundex(string name)
     {
         StringBuilder soundex = InitializeSoundex(name);
-        BuildSoundexCode(new BuildSoundexParams { Soundex = soundex, Name = name });
+        var data = new BuildSoundexParams { Soundex = soundex, Name = name };
+        BuildSoundexCode(data);
         return soundex;
     }
 
