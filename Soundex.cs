@@ -19,7 +19,7 @@ public class Soundex
     private static StringBuilder BuildSoundex(string name)
     {
         StringBuilder soundex = InitializeSoundex(name);
-        BuildSoundexCode(soundex, name);
+        BuildSoundexCode(new BuildSoundexParams { Soundex = soundex, Name = name });
         return soundex;
     }
 
@@ -30,8 +30,11 @@ public class Soundex
         return soundex;
     }
 
-    private static void BuildSoundexCode(StringBuilder soundex, string name)
+    private static void BuildSoundexCode(BuildSoundexParams parameters)
     {
+        StringBuilder soundex = parameters.Soundex;
+        string name = parameters.Name;
+
         char prevCode = GetSoundexCode(name[0]);
 
         for (int i = 1; i < name.Length && soundex.Length < 4; i++)
@@ -67,7 +70,13 @@ public class Soundex
             {'M', '5'}, {'N', '5'},
             {'R', '6'}
         };
-        
+
         return soundexCodes.TryGetValue(c, out char code) ? code : '0';
+    }
+
+    private class BuildSoundexParams
+    {
+        public StringBuilder Soundex { get; set; }
+        public string Name { get; set; }
     }
 }
