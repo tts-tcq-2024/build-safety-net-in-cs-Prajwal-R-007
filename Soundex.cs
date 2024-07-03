@@ -4,8 +4,7 @@ using System.Text;
 public class Soundex
 {
     public static string GenerateSoundex(string name)
-    {
-        
+    {  
         if (string.IsNullOrEmpty(name))
         {
             return string.Empty;
@@ -26,8 +25,7 @@ public class Soundex
             }
         }
     }
-
-    // Ensure the length of soundex is exactly 4 characters
+    
     while (soundex.Length < 4)
     {
         soundex.Append('0');
