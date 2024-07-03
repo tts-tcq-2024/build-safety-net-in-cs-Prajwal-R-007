@@ -1,10 +1,11 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 public class Soundex
 {
     public static string GenerateSoundex(string name)
-    {  
+    {
         if (string.IsNullOrEmpty(name))
         {
             return string.Empty;
@@ -17,9 +18,9 @@ public class Soundex
 
     private static StringBuilder BuildSoundex(string name)
     {
-       StringBuilder soundex = InitializeSoundex(name);
-       BuildSoundexCode(soundex, name);
-       return soundex;
+        StringBuilder soundex = InitializeSoundex(name);
+        BuildSoundexCode(soundex, name);
+        return soundex;
     }
 
     private static StringBuilder InitializeSoundex(string name)
@@ -29,16 +30,14 @@ public class Soundex
         return soundex;
     }
 
-    private static void BuildSoundexCode(object parameters)
+    private static void BuildSoundexCode(StringBuilder soundex, string name)
     {
-        StringBuilder soundex = (StringBuilder)((object[])parameters)[0];
-        string name = (string)((object[])parameters)[1];
         char prevCode = GetSoundexCode(name[0]);
-    
+
         for (int i = 1; i < name.Length && soundex.Length < 4; i++)
         {
             char code = GetSoundexCode(name[i]);
-    
+
             if (code != '0' && code != prevCode)
             {
                 soundex.Append(code);
@@ -68,5 +67,7 @@ public class Soundex
             {'M', '5'}, {'N', '5'},
             {'R', '6'}
         };
+        
+        return soundexCodes.TryGetValue(c, out char code) ? code : '0';
     }
 }
