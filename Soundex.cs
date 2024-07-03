@@ -29,8 +29,10 @@ public class Soundex
         return soundex;
     }
 
-    private static void BuildSoundexCode(StringBuilder soundex, string name)
+    private static void BuildSoundexCode(object parameters)
     {
+        StringBuilder soundex = (StringBuilder)((object[])parameters)[0];
+        string name = (string)((object[])parameters)[1];
         char prevCode = GetSoundexCode(name[0]);
     
         for (int i = 1; i < name.Length && soundex.Length < 4; i++)
