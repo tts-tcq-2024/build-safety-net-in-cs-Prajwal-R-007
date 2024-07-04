@@ -74,12 +74,14 @@ public class SoundexTests
     {
         Assert.Equal("P624", Soundex.GenerateSoundex("Prajwal"));
     }
+    
     [Fact]
     public void HandlesStringWithDuplicates()
     {
         Assert.Equal("W252", Soundex.GenerateSoundex("WashingtonDC"));
     }
-        [Fact]
+    
+    [Fact]
     public void HandlesStringWithVowels()
     {
         Assert.Equal("N622", Soundex.GenerateSoundex("NewYorkCity"));
