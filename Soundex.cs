@@ -82,7 +82,7 @@ public class Soundex
     private class BuildSoundexParams
     {
         public StringBuilder Soundex { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
     
 }
