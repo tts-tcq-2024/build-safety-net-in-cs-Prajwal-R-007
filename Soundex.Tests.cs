@@ -44,9 +44,9 @@ public class SoundexTests
     [Fact]
     public void CombinesAdjacentSameDigits()
     {
-        Assert.Equal("C234", Soundex.GenerateSoundex("Cccc"));
+        Assert.Equal("C000", Soundex.GenerateSoundex("Cccc"));
         Assert.Equal("D300", Soundex.GenerateSoundex("Ddt"));
-        Assert.Equal("F100", Soundex.GenerateSoundex("Ffifth"));
+        Assert.Equal("F130", Soundex.GenerateSoundex("Ffifth"));
         Assert.Equal("G200", Soundex.GenerateSoundex("Gggggle"));
     }
     
@@ -55,7 +55,7 @@ public class SoundexTests
     {
         Assert.Equal("C000", Soundex.GenerateSoundex("Chwcch"));
         Assert.Equal("D000", Soundex.GenerateSoundex("Dth"));
-        Assert.Equal("F100", Soundex.GenerateSoundex("Fifthw"));
+        Assert.Equal("F130", Soundex.GenerateSoundex("Fifthw"));
         Assert.Equal("G200", Soundex.GenerateSoundex("Ggiggle"));
     }
     
