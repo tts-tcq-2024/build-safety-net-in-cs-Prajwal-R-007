@@ -61,6 +61,11 @@ public class Soundex
             soundex.Append('0');
         }
     }
+    
+    private static bool ShouldAppendCode(char code, char prevCode)
+    {
+        return code != '0' && code != prevCode;
+    }
 
     private static char GetSoundexCode(char c)
     {
