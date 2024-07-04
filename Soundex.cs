@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 public class Soundex
 {
@@ -10,59 +11,78 @@ public class Soundex
             return string.Empty;
         }
 
+        StringBuilder soundex = BuildSoundex(name);
+        PadSoundex(soundex);
+        return soundex.ToString();
+    }
+
+    private static StringBuilder BuildSoundex(string name)
+    {
+        StringBuilder soundex = InitializeSoundex(name);
+        var data = new BuildSoundexParams { Soundex = soundex, Name = name };
+        BuildSoundexCode(data);
+        return soundex;
+    }
+
+    private static StringBuilder InitializeSoundex(string name)
+    {
         StringBuilder soundex = new StringBuilder();
         soundex.Append(char.ToUpper(name[0]));
+        return soundex;
+    }
+
+    private static void BuildSoundexCode(BuildSoundexParams parameters)
+    {
+        StringBuilder soundex = parameters.Soundex;
+        string name = parameters.Name;
+
         char prevCode = GetSoundexCode(name[0]);
 
         for (int i = 1; i < name.Length && soundex.Length < 4; i++)
         {
-            char code = GetSoundexCode(name[i]);
-            if (code != '0' && code != prevCode)
-            {
-                soundex.Append(code);
-                prevCode = code;
-            }
+            NextSoundexCode(soundex, name[i], prevCode);
         }
+    }
 
+    private static void NextSoundexCode(StringBuilder soundex, char letter, char prevCode)
+    {
+        char code = GetSoundexCode(letter);
+        if (code != '0' && code != prevCode)
+        {
+            soundex.Append(code);
+            prevCode = code;
+        }
+    }
+
+    private static void PadSoundex(StringBuilder soundex)
+    {
         while (soundex.Length < 4)
         {
             soundex.Append('0');
         }
-
-        return soundex.ToString();
     }
-
+    
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
-        switch (c)
+        Dictionary<char, char> soundexCodes = new Dictionary<char, char>
         {
-            case 'B':
-            case 'F':
-            case 'P':
-            case 'V':
-                return '1';
-            case 'C':
-            case 'G':
-            case 'J':
-            case 'K':
-            case 'Q':
-            case 'S':
-            case 'X':
-            case 'Z':
-                return '2';
-            case 'D':
-            case 'T':
-                return '3';
-            case 'L':
-                return '4';
-            case 'M':
-            case 'N':
-                return '5';
-            case 'R':
-                return '6';
-            default:
-                return '0'; // For A, E, I, O, U, H, W, Y
-        }
+            {'B', '1'}, {'F', '1'}, {'P', '1'}, {'V', '1'},
+            {'C', '2'}, {'G', '2'}, {'J', '2'}, {'K', '2'},
+            {'Q', '2'}, {'S', '2'}, {'X', '2'}, {'Z', '2'},
+            {'D', '3'}, {'T', '3'},
+            {'L', '4'},
+            {'M', '5'}, {'N', '5'},
+            {'R', '6'}
+        };
+
+        return soundexCodes.TryGetValue(c, out char code) ? code : '0';
     }
+
+    private class BuildSoundexParams
+    {
+        public StringBuilder? Soundex { get; set; }
+        public string? Name { get; set; }
+    }
+    
 }
