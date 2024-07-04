@@ -40,14 +40,14 @@ public class Soundex
 
         for (int i = 1; i < name.Length && soundex.Length < 4; i++)
         {
-            AppendNextSoundexCode(soundex, name[i], prevCode);
+            NextSoundexCode(soundex, name[i], prevCode);
         }
     }
 
-    private static void AppendNextSoundexCode(StringBuilder soundex, char letter, char prevCode)
+    private static void NextSoundexCode(StringBuilder soundex, char letter, char prevCode)
     {
         char code = GetSoundexCode(letter);
-        if (ShouldAppendCode(code, prevCode))
+        if (code != '0' && code != prevCode)
         {
             soundex.Append(code);
             prevCode = code;
@@ -62,11 +62,6 @@ public class Soundex
         }
     }
     
-    private static bool ShouldAppendCode(char code, char prevCode)
-    {
-        return code != '0' && code != prevCode;
-    }
-
     private static char GetSoundexCode(char c)
     {
         c = char.ToUpper(c);
